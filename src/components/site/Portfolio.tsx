@@ -82,7 +82,7 @@ export function Portfolio() {
         {/* Conditional Rendering: Carousel for Featured, Grid for everything else */}
         {active === "Featured" ? (
           <div
-            className="relative mx-auto mt-10 w-full max-w-6xl h-[70vh] min-h-[550px] max-h-[750px] overflow-hidden rounded-[40px] glass-strong shadow-2xl"
+            className="relative mx-auto mt-10 w-full max-w-6xl h-[80vh] min-h-[580px] md:h-[70vh] md:min-h-[550px] max-h-[750px] overflow-hidden rounded-[30px] sm:rounded-[40px] glass-strong shadow-2xl"
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
           >
@@ -103,7 +103,7 @@ export function Portfolio() {
                 {filtered.length > 0 && (
                   <>
                     {/* Left Side: 40% Image */}
-                    <div className="relative w-full md:w-[40%] h-1/2 md:h-full bg-black/5 dark:bg-white/5 p-8 md:p-12 flex items-center justify-center overflow-hidden rounded-[30px]">
+                    <div className="relative w-full md:w-[40%] h-[40%] md:h-full bg-black/5 dark:bg-white/5 p-6 md:p-12 flex items-center justify-center overflow-hidden rounded-[30px]">
                       <div className="h-full w-full overflow-hidden rounded-[30px]">
                         <motion.img
                           src={filtered[imageIndex].image}
@@ -117,22 +117,22 @@ export function Portfolio() {
                     </div>
 
                     {/* Right Side: 60% Project Info */}
-                    <div className="w-full md:w-[60%] h-1/2 md:h-full flex flex-col justify-center p-8 sm:p-12 md:p-16 lg:p-24 bg-background/50 backdrop-blur-md">
+                    <div className="w-full md:w-[60%] h-[60%] md:h-full flex flex-col justify-center p-6 xs:p-8 sm:p-12 md:p-16 lg:p-24 bg-background/50 backdrop-blur-md">
                       <div>
                         <div className="text-[10px] sm:text-xs font-semibold uppercase tracking-[0.3em] text-ember mb-3">
                           {filtered[imageIndex].category}
                         </div>
-                        <h3 className="font-display text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
+                        <h3 className="font-display text-xl xs:text-2xl sm:text-3xl md:text-5xl lg:text-6xl font-bold text-foreground leading-tight">
                           {filtered[imageIndex].title}
                         </h3>
-                        <p className="mt-4 md:mt-6 text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl">
+                        <p className="mt-2 md:mt-6 text-xs xs:text-sm sm:text-base md:text-lg text-muted-foreground leading-relaxed max-w-xl line-clamp-3 xs:line-clamp-none">
                           {filtered[imageIndex].description}
                         </p>
                       </div>
 
                       <button
                         onClick={() => setOpen(filtered[imageIndex])}
-                        className="mt-8 md:mt-12 flex w-fit items-center gap-3 rounded-full bg-ember px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all hover:scale-105 hover:bg-ember/90 hover:shadow-lg hover:shadow-ember/25"
+                        className="mt-4 xs:mt-6 md:mt-12 flex w-fit items-center gap-2.5 xs:gap-3 rounded-full bg-ember px-5 py-2.5 xs:px-6 xs:py-3.5 text-xs xs:text-sm font-semibold text-primary-foreground transition-all hover:scale-105 hover:bg-ember/90 hover:shadow-lg hover:shadow-ember/25"
                       >
                         View Project <Expand className="h-4 w-4" />
                       </button>

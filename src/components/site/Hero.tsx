@@ -137,12 +137,12 @@ export function Hero() {
             initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.2, duration: 0.9 }}
-            className="font-display mt-6 text-[clamp(2rem,5.2vw,4.6rem)] font-extrabold leading-[1.05] tracking-tight text-foreground"
+            className="font-display mt-6 text-[clamp(2rem,5.2vw,4.6rem)] font-extrabold leading-[1.1] md:leading-[1.05] tracking-tight text-foreground"
           >
-            <span className="block whitespace-nowrap">Think Outside The Box.</span>
-            <span className="mt-1 flex flex-nowrap items-baseline gap-x-3 whitespace-nowrap">
+            <span className="block md:whitespace-nowrap whitespace-normal">Think Outside The Box.</span>
+            <span className="mt-2 flex flex-wrap sm:flex-nowrap items-baseline gap-x-3">
               <span className="text-foreground/85">Create</span>
-              <span className="relative inline-block h-[1.1em] flex-1 overflow-hidden align-baseline">
+              <span className="relative inline-block h-[1.1em] min-w-[220px] sm:min-w-0 sm:flex-1 overflow-hidden align-baseline">
                 <AnimatePresence mode="wait">
                   <motion.span
                     key={rotatingWords[idx].text}

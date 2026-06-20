@@ -1,10 +1,42 @@
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Phone, Instagram, Linkedin, Send } from "lucide-react";
+import { Mail, Phone, Instagram, Linkedin, Send, Loader2 } from "lucide-react";
 import { SectionHeading } from "./Reveal";
 import { social } from "@/lib/site-data";
+import { toast } from "sonner";
 
 export function Contact() {
-  
+  const [submitting, setSubmitting] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = e.currentTarget;
+    const formData = new FormData(form);
+    
+    try {
+      const response = await fetch(form.action, {
+        method: form.method,
+        body: formData,
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+      
+      if (response.ok) {
+        toast.success("Inquiry sent successfully! We will get back to you soon.");
+        form.reset();
+      } else {
+        const data = await response.json();
+        toast.error(data.errors?.[0]?.message || "Something went wrong. Please try again.");
+      }
+    } catch (error) {
+      toast.error("Network error. Please check your connection.");
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
   return (
     <section id="contact" className="relative py-16 md:py-24">
       <div className="mx-auto max-w-7xl px-5 md:px-8">
@@ -48,23 +80,19 @@ export function Contact() {
           </div>
 
           <motion.form
-           action="https://formspree.io/f/mjgdwlgo"
-           method="POST"
-           initial={{ opacity: 0, y: 30 }}
-           whileInView={{ opacity: 1, y: 0 }}
-           viewport={{ once: true }}
-           transition={{ duration: 0.6 }}
-           className="rounded-3xl glass-strong p-7 md:p-10"
+            action="https://formspree.io/f/mjgdwlgo"
+            method="POST"
+            onSubmit={handleSubmit}
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className="rounded-3xl glass-strong p-7 md:p-10"
           >
             <input
-             type="hidden"
-             name="_subject"
-             value="New OUT OF BOX Client Inquiry"
-            />
-            <input
-             type="hidden"
-             name="_next"
-             value="http://localhost:8080/#contact"
+              type="hidden"
+              name="_subject"
+              value="New OUT OF BOX Client Inquiry"
             />
             
             <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
@@ -86,10 +114,20 @@ export function Contact() {
             </div>
             <button
               type="submit"
-              className="group mt-8 inline-flex items-center gap-2 rounded-full bg-ember px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_40px_-10px_oklch(0.74_0.19_45/0.7)] transition hover:scale-[1.03]"
+              disabled={submitting}
+              className="group mt-8 inline-flex items-center gap-2 rounded-full bg-ember px-7 py-3.5 text-sm font-semibold text-primary-foreground shadow-[0_10px_40px_-10px_oklch(0.74_0.19_45/0.7)] transition hover:scale-[1.03] disabled:opacity-75 disabled:scale-100 disabled:pointer-events-none"
             >
-              Send Inquiry
-              <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
+              {submitting ? (
+                <>
+                  Sending...
+                  <Loader2 className="h-4 w-4 animate-spin" />
+                </>
+              ) : (
+                <>
+                  Send Inquiry
+                  <Send className="h-4 w-4 transition group-hover:translate-x-0.5" />
+                </>
+              )}
             </button>
           </motion.form>
         </div>

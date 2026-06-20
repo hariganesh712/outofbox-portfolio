@@ -14,8 +14,11 @@ export function Process() {
         />
 
         <div className="relative mt-16">
-          <div className="absolute left-4 top-0 hidden h-full w-px bg-gradient-to-b from-transparent via-ember/40 to-transparent md:left-1/2 md:block" />
-          <div className="space-y-10 md:space-y-16">
+          {/* Timeline Line (Visible on both Mobile and Desktop) */}
+          <div className="absolute left-[18px] top-8 bottom-8 w-[2px] bg-white/10 md:left-1/2 md:-translate-x-1/2" />
+          <div className="absolute left-[18px] top-8 bottom-8 w-[2px] bg-gradient-to-b from-ember/60 via-ember to-ember/60 md:left-1/2 md:-translate-x-1/2" />
+
+          <div className="space-y-8 md:space-y-16">
             {processSteps.map((s, i) => {
               const left = i % 2 === 0;
               return (
@@ -25,14 +28,27 @@ export function Process() {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-60px" }}
                   transition={{ duration: 0.6 }}
-                  className="relative grid grid-cols-1 items-center gap-6 md:grid-cols-2"
+                  className="relative grid grid-cols-1 md:grid-cols-2 items-center"
                 >
-                  <div className={left ? "md:pr-12 md:text-right" : "md:col-start-2 md:pl-12"}>
-                    <div className="font-display text-6xl font-extrabold text-gradient-ember md:text-7xl">{s.n}</div>
-                    <h3 className="font-display mt-2 text-2xl font-bold text-foreground md:text-3xl">{s.title}</h3>
-                    <p className="mt-2 max-w-md text-sm text-muted-foreground md:text-base">{s.desc}</p>
+                  {/* Step Card (Unified Single Block) */}
+                  <div className={`col-span-1 pl-12 md:pl-0 flex flex-col ${
+                    left 
+                      ? "md:col-start-1 md:pr-16 md:text-right md:items-end" 
+                      : "md:col-start-2 md:pl-16 md:text-left md:items-start"
+                  }`}>
+                    <div className="font-display text-4xl xs:text-5xl md:text-7xl font-extrabold text-gradient-ember leading-none">
+                      {s.n}
+                    </div>
+                    <h3 className="font-display mt-1.5 md:mt-3 text-lg xs:text-xl md:text-2xl lg:text-3xl font-bold text-foreground leading-tight">
+                      {s.title}
+                    </h3>
+                    <p className="mt-2 max-w-md text-xs xs:text-sm md:text-base text-muted-foreground leading-relaxed">
+                      {s.desc}
+                    </p>
                   </div>
-                  <div className="absolute left-4 top-2 grid h-3 w-3 -translate-x-1/2 place-items-center rounded-full bg-ember shadow-[0_0_24px_4px_oklch(0.74_0.19_45/0.6)] md:left-1/2 md:top-1/2 md:-translate-y-1/2" />
+
+                  {/* Timeline Dot */}
+                  <div className="absolute left-[18px] top-[24px] xs:top-[28px] md:top-1/2 grid h-3.5 w-3.5 -translate-x-1/2 md:-translate-y-1/2 place-items-center rounded-full bg-ember border-2 border-background shadow-[0_0_15px_4px_oklch(0.74_0.19_45/0.6)] md:left-1/2" />
                 </motion.div>
               );
             })}
